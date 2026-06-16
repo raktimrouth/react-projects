@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { styled } from 'styled-components'
+
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -24,7 +26,7 @@ export default function AuthInputs() {
     <div id="auth-inputs">
       <div className="controls">
         <p>
-          <label>Email</label>
+          <label className='paragraph'>Email</label>
           <input
             type="email"
             className={emailNotValid ? 'invalid' : undefined}
