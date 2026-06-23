@@ -11,12 +11,27 @@ function App() {
     tasks: []
   })
 
-  function handleAddTask(){
-
+  function handleAddTask(task){
+     setProjectState((prevData) => {
+      const id = Math.random()
+      return {
+        ...prevData,
+        tasks: [{
+          text: task,
+          id: id,
+          projectId: prevData.selectedProjectId
+        },...prevData.tasks ]
+      }
+    })
   }
 
-  function handleDeleteTask(){
-
+  function handleDeleteTask(id){
+       setProjectState((prevData) => {
+      return {
+        ...prevData,
+        tasks: prevData.tasks.filter((task) => task.id !== id)
+      }
+    })
   }
 
   function handleAddProject() {
@@ -74,8 +89,8 @@ function App() {
   const selectedProject = projectState.projects.find(item => item.id === projectState.selectedProjectId)
   return (
     <main className="h-screen my-8 flex gap-8">
-      <Sidebar projects={projectState.projects} onStartAdd={handleAddProject} onSelectProject={handleSelectProject} />
-      {projectState.selectedProjectId != null && projectState.selectedProjectId != undefined && <SelectedProject deleteProject={handleDeleteProject} project={selectedProject} />}
+      <Sidebar projects={projectState.projects} onStartAdd={handleAddProject} onSelectProject={handleSelectProject} selectedProjectId={projectState.selectedProjectId} />
+      {projectState.selectedProjectId != null && projectState.selectedProjectId != undefined && <SelectedProject  onDelete={handleDeleteTask} tasks={projectState.tasks} onAdd={handleAddTask} deleteProject={handleDeleteProject} project={selectedProject} />}
       {projectState.selectedProjectId === null && <NewProject onAdd={handleOnAdd} onCancel={handleCancelAddProject} />}
       {projectState.selectedProjectId === undefined && <NoProjectSelected onStartAdd={handleAddProject} />}
 

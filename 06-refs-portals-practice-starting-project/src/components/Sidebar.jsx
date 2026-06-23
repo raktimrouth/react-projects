@@ -8,11 +8,20 @@ export default function Sidebar({onStartAdd, projects,onSelectProject,selectedPr
                 <Button btnText='+ Add Project' onClick={onStartAdd} />
             </div>
             <ul className="mt-8">
-                {projects.map(project => <li key={project.id}>
-                    <button onClick={() => onSelectProject(project.id)} className="w-full text-left px-2 py-1 rounded-sm my-1 text-slate-400 hover:text-stone-200 hover:bg-stone-800">
+                {projects.map(project => {
+                    let classes = 'w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800'
+                    if(selectedProjectId === project.id){
+                        classes += ' text-stone-200 bg-stone-800'
+                    }else{
+                        classes += ' text-slate-400'
+                    }
+                    return <li key={project.id}>
+                    <button onClick={() => onSelectProject(project.id)} className={classes}>
                         {project.title}
                     </button>
-                </li>)}
+                </li>
+                } 
+                )}
             </ul>
         </aside>
     );
